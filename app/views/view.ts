@@ -4,7 +4,8 @@ export abstract class View<T> {
     protected erro: boolean;
     private escapar: boolean;
 
-    constructor(seletor: string) {
+    constructor(seletor: string, escapar: boolean = false) {
+        this.escapar = escapar;
         const elemento = document.querySelector(seletor)
         if (elemento){
             this.elemento = <HTMLElement>elemento;
@@ -16,9 +17,15 @@ export abstract class View<T> {
 
     protected abstract template(model: T): string;
 
-    public update(model: T, erro = false): void {
+    public update(model: T, erro: boolean = false): void {
         this.erro = erro;
-        const template = this.template(model);
+
+        let template = this.template(model);
+
+        if (this.escapar) {
+            template = template.replace(/<script>[\s\S]*?<\/script>/,'');
+        }
+        
         this.elemento.innerHTML = template;        
     }
 }
