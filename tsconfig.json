@@ -7,5 +7,7 @@
         "removeComments": true,
         "strictNullChecks": true
     },
-    "include": ["app/src/**/*"]
+    "include": [
+        "app/src/**/*"
+    ]
 }

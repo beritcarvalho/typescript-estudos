@@ -15,14 +15,14 @@ export class NegociacoesView extends View<Negociacoes> {
         </thead>
         <tbody>
             ${negociacoes.lista().map(negociacao => {
-                return `
+            return `
                     <tr>
                         <td>${this.formatarData(negociacao.data)}</td>
                         <td>${negociacao.quantidade}</td>
                         <td>${negociacao.valor}</td>            
                     </tr>                
                 `
-            }).join('')}
+        }).join('')}
         </tbody>
     </table>
         `;
