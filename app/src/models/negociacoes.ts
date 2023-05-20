@@ -1,3 +1,4 @@
+import { inspecionar } from "../decorators/inspecionar.js";
 import { Negociacao } from "./negociacao.js";
 
 export class Negociacoes {

@@ -1,3 +1,4 @@
+import { escape } from "../decorators/escape.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { View } from "./view.js";
 
@@ -19,12 +20,12 @@ export class NegociacoesView extends View<Negociacoes> {
                     <tr>
                         <td>${this.formatarData(negociacao.data)}</td>
                         <td>${negociacao.quantidade}</td>
-                        <td>${negociacao.valor}</td>            
+                        <td>${negociacao.valor}</td>                               
                     </tr>                
                 `
         }).join('')}
         </tbody>
-    </table>
+    </table>    
         `;
     }
 
