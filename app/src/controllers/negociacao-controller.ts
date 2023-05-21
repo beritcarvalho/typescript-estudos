@@ -3,6 +3,7 @@ import { EDiasDaSemana } from "../enums/dia-da-semana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { NegociacoesService } from "../services/negociacoes-service.js";
+import { imprimir } from "../utils/imprimir.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/negociacoesView.js";
 
@@ -34,14 +35,21 @@ export class NegociacaoController {
         }
 
         this.negociacoes.adiciona(negociacao);
+        imprimir(negociacao, this.negociacoes);
         this.limparFormulario();
         this.atualizaView();
     }
 
     public importaDatos(): void {
         this.negociacoesServices.obterNegociacoesDoDia()
-            .then(listaApiNegociacao => {
-                listaApiNegociacao.forEach(negociacao => this.negociacoes.adiciona(negociacao))
+            .then(listaNegociacaoRetornoApi => {
+                return listaNegociacaoRetornoApi.filter(itemListaApi => {
+                    return !this.negociacoes.lista()
+                        .some(itemListaNegociacao => itemListaNegociacao.VerificarItemRepetido(itemListaApi));
+                })
+            })
+            .then(listaFiltrada => {
+                listaFiltrada.forEach(negociacao => this.negociacoes.adiciona(negociacao))
                 this.negociacoesView.update(this.negociacoes)
             }
             );
